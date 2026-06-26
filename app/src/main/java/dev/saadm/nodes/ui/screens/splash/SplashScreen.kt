@@ -1,18 +1,23 @@
 package dev.saadm.nodes.ui.screens.splash
 
-import android.widget.ProgressBar
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
@@ -20,11 +25,6 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun SplashScreen(onTimeout: () -> Unit = {}) {
-    LaunchedEffect(Unit) {
-        delay(2000L.milliseconds)
-        onTimeout()
-    }
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -46,18 +46,61 @@ fun SplashScreen(onTimeout: () -> Unit = {}) {
             Spacer(
                 modifier = Modifier.height(16.dp)
             )
-            ProgressBar()
+            ProgressBar(onComplete = onTimeout)
         }
     }
 }
 
 @Composable
-fun ProgressBar() {
-    CircularProgressIndicator(
-        color = MaterialTheme.colorScheme.primary
+fun ProgressBar(onComplete: () -> Unit) {
+    val progress = remember { Animatable(0f) }
+
+    LaunchedEffect(Unit) {
+        val random = kotlin.random.Random(System.currentTimeMillis())
+
+        val checkpoints = List(5) {
+            random.nextFloat() * 0.15f + 0.08f // 8-23% increments
+        }
+
+        var current = 0f
+
+        checkpoints.forEachIndexed { index, increment ->
+            current = (current + increment).coerceAtMost(0.9f)
+
+            progress.animateTo(
+                targetValue = current,
+                animationSpec = tween(
+                    durationMillis = random.nextInt(180, 420),
+                    easing = FastOutSlowInEasing
+                )
+            )
+
+            if (index != checkpoints.lastIndex) {
+                delay(random.nextLong(120, 350).milliseconds)
+            }
+        }
+
+        progress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(
+                durationMillis = 400,
+                easing = FastOutSlowInEasing
+            )
+        )
+
+        onComplete()
+    }
+
+    LinearProgressIndicator(
+        progress = { progress.value },
+        modifier = Modifier
+            .fillMaxWidth(0.45f)
+            .height(6.dp),
+        strokeCap = StrokeCap.Round,
+        color = MaterialTheme.colorScheme.primary,
+        trackColor = MaterialTheme.colorScheme.surfaceVariant,
     )
 }
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewSplashScreen() {

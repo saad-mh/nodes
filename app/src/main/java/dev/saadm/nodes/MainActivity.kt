@@ -24,5 +24,7 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun MainActivityPreview() {
-    MainActivity()
+    NodesTheme {
+        NodesApp()
+    }
 }
