@@ -28,7 +28,7 @@ fun NodesApp() {
     ) {
         Crossfade(
             targetState = currentScreen,
-            animationSpec = tween(durationMillis = 1000),
+            animationSpec = tween(durationMillis = 500),
             label = "screen_transition"
         ) { screen ->
             when (screen) {
