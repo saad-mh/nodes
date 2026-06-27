@@ -21,17 +21,18 @@ import dev.saadm.nodes.domain.repository.ChatRepository
 import dev.saadm.nodes.ui.screens.home.components.ChatList
 import dev.saadm.nodes.ui.screens.home.components.ChatTopBar
 import dev.saadm.nodes.ui.screens.home.components.FilterChipsSection
-import dev.saadm.nodes.ui.screens.home.components.NodesBottomNavigation
 import dev.saadm.nodes.ui.screens.home.components.StoriesSection
 
 @Composable
-fun HomeScreen(repository: ChatRepository = FakeChatRepository()) {
+fun HomeScreen(
+    repository: ChatRepository = FakeChatRepository(),
+    onSettingsClick: () -> Unit = {}
+) {
     val stories = remember { repository.getStories() }
     val chats = remember { repository.getChats() }
 
     Scaffold(
-        topBar = { ChatTopBar() },
-        bottomBar = { NodesBottomNavigation() },
+        topBar = { ChatTopBar(onSettingsClick = onSettingsClick) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { /* TODO */ },

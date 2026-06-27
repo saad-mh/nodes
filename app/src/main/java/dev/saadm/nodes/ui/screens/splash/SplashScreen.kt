@@ -61,8 +61,8 @@ fun ProgressBar(onComplete: () -> Unit) {
     LaunchedEffect(Unit) {
         val random = kotlin.random.Random(System.currentTimeMillis())
 
-        val checkpoints = List(5) {
-            random.nextFloat() * 0.15f + 0.08f // 8-23% increments
+        val checkpoints = List(2) {
+            random.nextFloat() * 0.2f + 0.08f
         }
 
         var current = 0f

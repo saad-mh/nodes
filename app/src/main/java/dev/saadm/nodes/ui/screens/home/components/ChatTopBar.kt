@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ChatTopBar() {
+fun ChatTopBar(onSettingsClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +51,7 @@ fun ChatTopBar() {
         IconButton(onClick = { /* TODO */ }) {
             Icon(imageVector = Icons.Outlined.PhotoCamera, contentDescription = "Camera")
         }
-        IconButton(onClick = { /* TODO */ }) {
+        IconButton(onClick = onSettingsClick) {
             Icon(imageVector = Icons.Default.MoreVert, contentDescription = "More")
         }
     }

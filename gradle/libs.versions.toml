@@ -9,6 +9,8 @@ activityCompose = "1.8.0"
 kotlin = "2.2.10"
 composeBom = "2026.02.01"
 animation = "1.11.3"
+navigationCompose = "2.9.8"
+iconics = "5.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -27,6 +29,10 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+mikepenz-iconics-core = { group = "com.mikepenz", name = "iconics-core", version.ref = "iconics" }
+mikepenz-iconics-compose = { group = "com.mikepenz", name = "iconics-compose", version.ref = "iconics" }
+mikepenz-ionicons-typeface = "com.mikepenz:ionicons-typeface:2.0.1.8-kotlin"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

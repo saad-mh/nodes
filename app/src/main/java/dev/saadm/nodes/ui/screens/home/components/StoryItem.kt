@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.saadm.nodes.domain.models.Story
@@ -103,4 +104,12 @@ fun StoryItem(story: Story) {
             textAlign = TextAlign.Center
         )
     }
+}
+
+@Preview
+@Composable
+fun PreviewStoryItem() {
+    StoryItem(
+        Story(id = "2", userName = "Lisa", unreadCount = 3)
+    )
 }

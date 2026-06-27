@@ -8,13 +8,12 @@ import dev.saadm.nodes.domain.repository.ChatRepository
 class FakeChatRepository : ChatRepository {
     override fun getStories(): List<Story> {
         return listOf(
-            Story(id = "1", userName = "You", isUser = true),
-            Story(id = "2", userName = "Lisa", unreadCount = 3),
-            Story(id = "3", userName = "Nya", unreadCount = 1),
-            Story(id = "4", userName = "Lucas", unreadCount = 2),
-            Story(id = "5", userName = "Joe"),
-            Story(id = "6", userName = "Emma"),
-            Story(id = "7", userName = "Alex")
+            Story(id = "1", userName = "Khushi", unreadCount = 3),
+            Story(id = "2", userName = "Nya", unreadCount = 1),
+            Story(id = "3", userName = "Midas", unreadCount = 2),
+            Story(id = "4", userName = "Fortnite"),
+            Story(id = "5", userName = "Mango"),
+            Story(id = "6", userName = "Yeah")
         )
     }
 
@@ -22,7 +21,7 @@ class FakeChatRepository : ChatRepository {
         return listOf(
             Chat(
                 id = "1",
-                name = "Nick P.",
+                name = "Khushi",
                 lastMessage = "Yeah, Sunday will be great",
                 timestamp = "20min",
                 unreadCount = 3,
@@ -30,37 +29,38 @@ class FakeChatRepository : ChatRepository {
             ),
             Chat(
                 id = "2",
-                name = "Project 1 Chat",
-                lastMessage = "You: I've to take another look before...",
+                name = "Nya",
+                lastMessage = "You: I'll check the design now, as it seems to have happened that the last text overflowed.",
                 timestamp = "2min",
                 isPinned = true,
+                isMuted = true,
                 isGroup = true
             ),
             Chat(
                 id = "3",
-                name = "Noah K.",
-                lastMessage = "Thanks Noah, see ya later",
+                name = "Midas",
+                lastMessage = "Thanks Midas, see ya later",
                 timestamp = "12min",
                 isMuted = true,
                 status = MessageStatus.READ
             ),
             Chat(
                 id = "4",
-                name = "Maya P. Lisa K. Nya R.",
-                lastMessage = "Lisa: Sure hahaha",
+                name = "Fortnite Group",
+                lastMessage = "Mango: Sure hahaha",
                 timestamp = "15min",
                 isGroup = true
             ),
             Chat(
                 id = "5",
-                name = "Sofia B.",
+                name = "No",
                 lastMessage = "I'll be there in 5 min",
                 timestamp = "18min",
                 unreadCount = 1
             ),
             Chat(
                 id = "6",
-                name = "Malik Z.",
+                name = "Alex",
                 lastMessage = "Why would you do that?",
                 timestamp = "20min",
                 status = MessageStatus.READ
