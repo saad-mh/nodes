@@ -17,6 +17,7 @@ import dev.saadm.nodes.ui.screens.splash.SplashScreen
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
     object Home : Screen("home")
+    object Contacts : Screen("contacts")
     object Updates : Screen("updates")
     object Calls : Screen("calls")
     object Profile : Screen("profile")
@@ -49,6 +50,9 @@ fun AppNavHost(
             HomeScreen(onSettingsClick = {
                 navController.navigate(Screen.Settings.route)
             })
+        }
+        composable(Screen.Contacts.route) {
+            dev.saadm.nodes.ui.screens.contacts.ContactsScreen(onBackClick = { navController.popBackStack() })
         }
         composable(Screen.Updates.route) {
             PlaceholderScreen("Updates")

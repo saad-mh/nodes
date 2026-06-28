@@ -4,46 +4,44 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.saadm.nodes.data.repository.FakeChatRepository
-import dev.saadm.nodes.domain.repository.ChatRepository
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.saadm.nodes.core.theme.NodesTheme
+import dev.saadm.nodes.core.theme.Primary
 import dev.saadm.nodes.ui.screens.home.components.ChatList
 import dev.saadm.nodes.ui.screens.home.components.ChatTopBar
-import dev.saadm.nodes.ui.screens.home.components.FilterChipsSection
 import dev.saadm.nodes.ui.screens.home.components.StoriesSection
 
 @Composable
 fun HomeScreen(
-    repository: ChatRepository = FakeChatRepository(),
-    onSettingsClick: () -> Unit = {}
+    viewModel: ChatListViewModel = viewModel(),
+    onSettingsClick: () -> Unit = {},
+    onChatClick: (String) -> Unit = {}
 ) {
-    val stories = remember { repository.getStories() }
-    val chats = remember { repository.getChats() }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = { ChatTopBar(onSettingsClick = onSettingsClick) },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* TODO */ },
-                containerColor = Color.White,
-                contentColor = Color.Black,
-                shape = CircleShape,
-                modifier = Modifier
-                    .size(56.dp)
-                    .padding(bottom = 0.dp) // Adjust based on bottom nav
+                onClick = { /* New Chat */ },
+                containerColor = Primary,
+                contentColor = Color.White,
+                shape = androidx.compose.foundation.shape.CircleShape,
+                modifier = Modifier.size(56.dp)
             ) {
-                Icon(Icons.Default.Add, contentDescription = "New Chat")
+                Icon(imageVector = Icons.Default.Edit, contentDescription = "New Message")
             }
         }
     ) { innerPadding ->
@@ -52,15 +50,27 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            StoriesSection(stories = stories)
-            FilterChipsSection()
-            ChatList(chats = chats)
+            StoriesSection(stories = uiState.stories)
+            ChatList(
+                chats = uiState.chats,
+                onChatClick = { chat -> onChatClick(chat.id) }
+            )
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
-    HomeScreen()
+fun HomeScreenLightPreview() {
+    NodesTheme(darkTheme = false) {
+        HomeScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenDarkPreview() {
+    NodesTheme(darkTheme = true) {
+        HomeScreen()
+    }
 }
